@@ -165,4 +165,20 @@ app.get("/keiyo2/edit/:number", (req, res) => {
   res.render('keiyo2_edit', { id: number, data: detail });
 });
 
+// Update（更新処理）
+app.post("/keiyo2/update/:number", (req, res) => {
+  // 本来ならここにDBとのやり取りが入る
+  const number = req.params.number;
+  if (station2[number] === undefined) {
+    return res.status(404).send('その駅は見つかりません <a href="/keiyo2">駅一覧に戻る</a>');
+  }
+  station2[number].code = req.body.code;
+  station2[number].name = req.body.name;
+  station2[number].change = req.body.change;
+  station2[number].passengers = Number(req.body.passengers);
+  station2[number].distance = Number(req.body.distance);
+  console.log(station2);
+  res.redirect('/keiyo2');
+});
+
 app.listen(8080, () => console.log("Example app listening on port 8080!"));
