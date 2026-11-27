@@ -136,4 +136,22 @@ app.get("/keiyo2/:number", (req, res) => {
   res.render('keiyo2_detail', { id: number, data: detail });
 });
 
+// Create（登録処理）
+app.post("/keiyo2", (req, res) => {
+  // 本来ならここにDBとのやり取りが入る
+  // id は「今ある id の最大値 + 1」（削除後に length + 1 だと重複するため）
+  let id = 1;
+  for (const row of station2) {
+    if (row.id >= id) id = row.id + 1;
+  }
+  const code = req.body.code;
+  const name = req.body.name;
+  const change = req.body.change;
+  const passengers = Number(req.body.passengers);
+  const distance = Number(req.body.distance);
+  station2.push({ id: id, code: code, name: name, change: change, passengers: passengers, distance: distance });
+  console.log(station2);
+  res.render('keiyo2', { data: station2 });
+});
+
 app.listen(8080, () => console.log("Example app listening on port 8080!"));
