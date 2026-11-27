@@ -119,6 +119,12 @@ app.get("/keiyo2", (req, res) => {
   res.render('keiyo2', { data: station2 });
 });
 
+// Create（新規登録フォームへ）
+// ※ /keiyo2/:number より上に書く（下だと "create" が番号として扱われる）
+app.get("/keiyo2/create", (req, res) => {
+  res.redirect('/public/keiyo2_new.html');
+});
+
 // Read（詳細）
 app.get("/keiyo2/:number", (req, res) => {
   // 本来ならここにDBとのやり取りが入る
