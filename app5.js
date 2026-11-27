@@ -181,4 +181,16 @@ app.post("/keiyo2/update/:number", (req, res) => {
   res.redirect('/keiyo2');
 });
 
+// Delete（詳細ページの「削除」から呼ばれる）
+app.get("/keiyo2/delete/:number", (req, res) => {
+  // 本来ならここにDBとのやり取りが入る
+  const number = Number(req.params.number);
+  // 削除する番号が存在するかチェックする
+  if (!Number.isInteger(number) || number < 0 || number >= station2.length) {
+    return res.status(404).send('その駅は見つかりません <a href="/keiyo2">駅一覧に戻る</a>');
+  }
+  station2.splice(number, 1);
+  res.redirect('/keiyo2');
+});
+
 app.listen(8080, () => console.log("Example app listening on port 8080!"));
