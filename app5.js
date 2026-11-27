@@ -119,4 +119,15 @@ app.get("/keiyo2", (req, res) => {
   res.render('keiyo2', { data: station2 });
 });
 
+// Read（詳細）
+app.get("/keiyo2/:number", (req, res) => {
+  // 本来ならここにDBとのやり取りが入る
+  const number = req.params.number;
+  const detail = station2[number];
+  if (detail === undefined) {
+    return res.status(404).send('その駅は見つかりません <a href="/keiyo2">駅一覧に戻る</a>');
+  }
+  res.render('keiyo2_detail', { id: number, data: detail });
+});
+
 app.listen(8080, () => console.log("Example app listening on port 8080!"));
